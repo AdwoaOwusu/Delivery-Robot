@@ -1,7 +1,9 @@
-#define back_right 3
-#define back_left 6
-#define forward_right 5
-#define forward_left 9
+#define back_right 5
+#define back_left 9
+#define forward_right 3
+#define forward_left 6
+#define enA 11
+#define enB 10
 
 void setup_remote() {
   Serial.begin(9600);
@@ -10,7 +12,11 @@ void setup_remote() {
   pinMode(forward_right, OUTPUT);
   pinMode(back_left, OUTPUT);
   pinMode(forward_left, OUTPUT);
-    
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+
+  digitalWrite(enA, HIGH);
+  digitalWrite(enB, HIGH);
 }
 
 void loop_remote() {
@@ -40,7 +46,6 @@ void loop_remote() {
         { 
           Stop();
         }
-      delay(200);
       IrReceiver.resume();
     }
    }
@@ -55,37 +60,33 @@ void Backward()
   }
 
   
- void Forward()
-  {
+ void Forward(){
   digitalWrite(back_right,LOW);
   digitalWrite(forward_right,HIGH);
-  digitalWrite(back_left,LOW);
-  digitalWrite(forward_left,HIGH);
-  }
+  digitalWrite(back_left,HIGH);
+  digitalWrite(forward_left,LOW);
+}
 
   
- void Stop()
-  {
+ void Stop(){
   digitalWrite(back_right,LOW);
   digitalWrite(forward_right,LOW);
   digitalWrite(back_left,LOW);
   digitalWrite(forward_left,LOW);
-  }
+}
 
   
-  int Left()
-    {
+ void Left(){
     digitalWrite(back_right,LOW);
     digitalWrite(forward_right,LOW);
     digitalWrite(back_left,LOW);
     digitalWrite(forward_left,HIGH);
-    }
+ }
 
     
-  int Right()
-    {
+ void Right(){
     digitalWrite(back_right,LOW);
     digitalWrite(forward_right,HIGH);
     digitalWrite(back_left,LOW);
     digitalWrite(forward_left,LOW);
-    }
+}
