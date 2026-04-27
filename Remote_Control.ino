@@ -1,9 +1,23 @@
+#include <Servo.h>
+
 #define back_right 5
 #define back_left 9
 #define forward_right 3
 #define forward_left 6
 #define enA 11
 #define enB 10
+#define shoulder 7
+#define gripper 4 
+#define elbow 12 
+
+Servo shoulderServo;
+int shoulderIntPos = 140;
+
+Servo gripperServo; 
+int gripperIntPos = 0;
+
+Servo elbowServo; 
+int elbowIntPos = 100;
 
 void setup_remote() {
   Serial.begin(9600);
@@ -12,9 +26,21 @@ void setup_remote() {
   pinMode(forward_right, OUTPUT);
   pinMode(back_left, OUTPUT);
   pinMode(forward_left, OUTPUT);
+  
+  pinMode(shoulder, OUTPUT);
+  shoulderServo.write(shoulderIntPos);
+  shoulderServo.attach(shoulder);
+  
+  pinMode(gripper, OUTPUT);
+  gripperServo.write(gripperIntPos);
+  gripperServo.attach(gripper);
+    
+  pinMode(elbow, OUTPUT);
+  elbowServo.write(elbowIntPos);
+  elbowServo.attach(elbow);
+
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);
-
   digitalWrite(enA, HIGH);
   digitalWrite(enB, HIGH);
 }
@@ -45,6 +71,30 @@ void loop_remote() {
         else if (results  == 22)//Stop
         { 
           Stop();
+        }
+        else if (results == 28)
+        {
+          ShoulderUp();
+        }
+        else if (results == 90)
+        {
+          ShoulderDown();
+        }
+         else if (results == 66)
+        {
+          ElbowUp();
+        }
+        else if (results == 82)
+        {
+          ElbowDown();
+        }
+        else if (results == 9)
+        {
+          GripperOpen();
+        }
+        else if (results == 21)
+        {
+          GripperClose();
         }
       IrReceiver.resume();
     }
@@ -89,4 +139,40 @@ void Backward()
     digitalWrite(forward_right,HIGH);
     digitalWrite(back_left,LOW);
     digitalWrite(forward_left,LOW);
+}
+
+void ShoulderUp(){
+   shoulderIntPos = shoulderIntPos + 10;
+   shoulderServo.write(shoulderIntPos);
+   delay(30);
+}
+
+void ShoulderDown(){
+   shoulderIntPos = shoulderIntPos - 10;
+   shoulderServo.write(shoulderIntPos);
+   delay(30);
+}
+
+void ElbowUp(){
+   elbowIntPos = elbowIntPos + 10;
+   elbowServo.write(elbowIntPos);
+   delay(30);
+}
+
+void ElbowDown(){
+   elbowIntPos = elbowIntPos - 10;
+   elbowServo.write(elbowIntPos);
+   delay(30);
+}
+
+void GripperOpen(){
+   gripperIntPos = gripperIntPos + 50;
+   gripperServo.write(gripperIntPos);
+   delay(30);
+}
+
+void GripperClose(){
+   gripperIntPos = gripperIntPos - 50;
+   gripperServo.write(gripperIntPos);
+   delay(30);
 }
