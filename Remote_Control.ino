@@ -74,11 +74,11 @@ void loop_remote() {
         }
         else if (results == 28)
         {
-          ShoulderUp();
+          ShoulderDown();
         }
         else if (results == 90)
         {
-          ShoulderDown();
+          ShoulderUp();
         }
          else if (results == 66)
         {
@@ -141,38 +141,38 @@ void Backward()
     digitalWrite(forward_left,LOW);
 }
 
-void ShoulderUp(){
-   shoulderIntPos = shoulderIntPos + 10;
+void ShoulderDown(){
+   shoulderIntPos = min(shoulderIntPos + 10, 180);
    shoulderServo.write(shoulderIntPos);
    delay(30);
 }
 
-void ShoulderDown(){
-   shoulderIntPos = shoulderIntPos - 10;
+void ShoulderUp(){
+   shoulderIntPos = max(shoulderIntPos - 10, 0);
    shoulderServo.write(shoulderIntPos);
    delay(30);
 }
 
 void ElbowUp(){
-   elbowIntPos = elbowIntPos + 10;
+   elbowIntPos = min(elbowIntPos + 10, 180);
    elbowServo.write(elbowIntPos);
    delay(30);
 }
 
 void ElbowDown(){
-   elbowIntPos = elbowIntPos - 10;
+   elbowIntPos = max(elbowIntPos - 10, 0);
    elbowServo.write(elbowIntPos);
    delay(30);
 }
 
 void GripperOpen(){
-   gripperIntPos = gripperIntPos + 50;
+   gripperIntPos = min(gripperIntPos + 50, 180);
    gripperServo.write(gripperIntPos);
    delay(30);
 }
 
 void GripperClose(){
-   gripperIntPos = gripperIntPos - 50;
+   gripperIntPos = max(gripperIntPos - 50, 0);
    gripperServo.write(gripperIntPos);
    delay(30);
 }
