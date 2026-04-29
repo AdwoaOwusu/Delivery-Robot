@@ -11,13 +11,13 @@
 #define elbow 12 
 
 Servo shoulderServo;
-int shoulderIntPos = 140;
+int shoulderIntPos = 100;
 
 Servo gripperServo; 
 int gripperIntPos = 0;
 
 Servo elbowServo; 
-int elbowIntPos = 100;
+int elbowIntPos = 90;
 
 void setup_remote() {
   Serial.begin(9600);
@@ -27,15 +27,12 @@ void setup_remote() {
   pinMode(back_left, OUTPUT);
   pinMode(forward_left, OUTPUT);
   
-  pinMode(shoulder, OUTPUT);
   shoulderServo.write(shoulderIntPos);
   shoulderServo.attach(shoulder);
   
-  pinMode(gripper, OUTPUT);
   gripperServo.write(gripperIntPos);
   gripperServo.attach(gripper);
     
-  pinMode(elbow, OUTPUT);
   elbowServo.write(elbowIntPos);
   elbowServo.attach(elbow);
 
@@ -144,35 +141,35 @@ void Backward()
 void ShoulderDown(){
    shoulderIntPos = min(shoulderIntPos + 10, 180);
    shoulderServo.write(shoulderIntPos);
-   delay(30);
+//   delay(30);
 }
 
 void ShoulderUp(){
    shoulderIntPos = max(shoulderIntPos - 10, 0);
    shoulderServo.write(shoulderIntPos);
-   delay(30);
+//   delay(30);
 }
 
 void ElbowUp(){
    elbowIntPos = min(elbowIntPos + 10, 180);
    elbowServo.write(elbowIntPos);
-   delay(30);
+//   delay(30);
 }
 
 void ElbowDown(){
    elbowIntPos = max(elbowIntPos - 10, 0);
    elbowServo.write(elbowIntPos);
-   delay(30);
+//   delay(30);
 }
 
 void GripperOpen(){
    gripperIntPos = min(gripperIntPos + 50, 180);
    gripperServo.write(gripperIntPos);
-   delay(30);
+//   delay(30);
 }
 
 void GripperClose(){
    gripperIntPos = max(gripperIntPos - 50, 0);
    gripperServo.write(gripperIntPos);
-   delay(30);
+//   delay(30);
 }
