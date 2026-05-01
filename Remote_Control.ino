@@ -27,14 +27,14 @@ void setup_remote() {
   pinMode(back_left, OUTPUT);
   pinMode(forward_left, OUTPUT);
   
-  shoulderServo.write(shoulderIntPos);
   shoulderServo.attach(shoulder);
-  
-  gripperServo.write(gripperIntPos);
+  shoulderServo.write(shoulderIntPos);
+
   gripperServo.attach(gripper);
-    
-  elbowServo.write(elbowIntPos);
+  gripperServo.write(gripperIntPos);
+
   elbowServo.attach(elbow);
+  elbowServo.write(elbowIntPos);
 
   pinMode(enA, OUTPUT);
   pinMode(enB, OUTPUT);
@@ -46,9 +46,13 @@ void loop_remote() {
   
     if(IrReceiver.decode())
       {
+         
+         //if (IrReceiver.decodedIRData.flags & 0x1) return; // ← ignore repeat frames
+//         int results = IrReceiver.decodedIRData.command;
+
          int results = IrReceiver.decodedIRData.command;
          Serial.println(results);
-
+       
         if (results == 12)//Press FORWARD Button
         { 
           Forward();
@@ -138,38 +142,92 @@ void Backward()
     digitalWrite(forward_left,LOW);
 }
 
-void ShoulderDown(){
-   shoulderIntPos = min(shoulderIntPos + 10, 180);
-   shoulderServo.write(shoulderIntPos);
-//   delay(30);
+//void ShoulderDown(){
+//   shoulderIntPos = min(shoulderIntPos + 10, 180);
+//   shoulderServo.write(shoulderIntPos);
+////   delay(30);
+//}
+//
+//void ShoulderUp(){
+//   shoulderIntPos = max(shoulderIntPos - 10, 0);
+//   shoulderServo.write(shoulderIntPos);
+////   delay(30);
+//}
+//
+//void ElbowUp(){
+//   elbowIntPos = min(elbowIntPos + 10, 180);
+//   elbowServo.write(elbowIntPos);
+////   delay(30);
+//}
+//
+//void ElbowDown(){
+//   elbowIntPos = max(elbowIntPos - 10, 0);
+//   elbowServo.write(elbowIntPos);
+////   delay(30);
+//}
+//
+//void GripperOpen(){
+//   gripperIntPos = min(gripperIntPos + 50, 180);
+//   gripperServo.write(gripperIntPos);
+////   delay(30);
+//}
+//
+//void GripperClose(){
+//   gripperIntPos = max(gripperIntPos - 50, 0);
+//   gripperServo.write(gripperIntPos);
+////   delay(30);
+//}
+
+void ShoulderDown() {
+  int target = min(shoulderIntPos + 10, 180);
+  for (int j = shoulderIntPos; j <= target; j++) {
+    shoulderServo.write(j);
+//    delay(20);  // adjust this to taste — smaller = faster
+  }
+  shoulderIntPos = target;
 }
 
-void ShoulderUp(){
-   shoulderIntPos = max(shoulderIntPos - 10, 0);
-   shoulderServo.write(shoulderIntPos);
-//   delay(30);
+void ShoulderUp() {
+  int target = max(shoulderIntPos - 10, 0);
+  for (int j = shoulderIntPos; j >= target; j--) {
+    shoulderServo.write(j);
+//    delay(20);
+  }
+  shoulderIntPos = target;
 }
 
-void ElbowUp(){
-   elbowIntPos = min(elbowIntPos + 10, 180);
-   elbowServo.write(elbowIntPos);
-//   delay(30);
+void ElbowUp() {
+  int target = min(elbowIntPos + 5, 180);
+  for (int j = elbowIntPos; j <= target; j++) {
+    elbowServo.write(j);
+//    delay(20);
+  }
+  elbowIntPos = target;
 }
 
-void ElbowDown(){
-   elbowIntPos = max(elbowIntPos - 10, 0);
-   elbowServo.write(elbowIntPos);
-//   delay(30);
+void ElbowDown() {
+  int target = max(elbowIntPos - 5, 0);
+  for (int j = elbowIntPos; j >= target; j--) {
+    elbowServo.write(j);
+//    delay(20);
+  }
+  elbowIntPos = target;
 }
 
-void GripperOpen(){
-   gripperIntPos = min(gripperIntPos + 50, 180);
-   gripperServo.write(gripperIntPos);
-//   delay(30);
+void GripperOpen() {
+  int target = min(gripperIntPos + 5, 180);
+  for (int j = gripperIntPos; j <= target; j++) {
+    gripperServo.write(j);
+//    delay(20);
+  }
+  gripperIntPos = target;
 }
 
-void GripperClose(){
-   gripperIntPos = max(gripperIntPos - 50, 0);
-   gripperServo.write(gripperIntPos);
-//   delay(30);
+void GripperClose() {
+  int target = max(gripperIntPos - 5, 0);
+  for (int j = gripperIntPos; j >= target; j--) {
+    gripperServo.write(j);
+    delay(20);
+   }
+  gripperIntPos = target;
 }
