@@ -1,9 +1,9 @@
 #include <Servo.h>
 
-#define back_right 5
-#define back_left 9
-#define forward_right 3
-#define forward_left 6
+#define back_right 5 
+#define back_left 9 
+#define forward_right 3 
+#define forward_left 6 
 #define enA 11
 #define enB 10
 #define shoulder 7
@@ -46,10 +46,6 @@ void loop_remote() {
   
     if(IrReceiver.decode())
       {
-         
-         //if (IrReceiver.decodedIRData.flags & 0x1) return; // ← ignore repeat frames
-//         int results = IrReceiver.decodedIRData.command;
-
          int results = IrReceiver.decodedIRData.command;
          Serial.println(results);
        
@@ -104,16 +100,16 @@ void loop_remote() {
  
 void Backward()
   {
-  digitalWrite(back_right,HIGH);
-  digitalWrite(forward_right,LOW);
-  digitalWrite(back_left,HIGH);
-  digitalWrite(forward_left,LOW);
+  digitalWrite(back_right,LOW);
+  digitalWrite(forward_right,HIGH);
+  digitalWrite(back_left,LOW);
+  digitalWrite(forward_left,HIGH);
   }
 
   
  void Forward(){
-  digitalWrite(back_right,LOW);
-  digitalWrite(forward_right,HIGH);
+  digitalWrite(back_right,HIGH);
+  digitalWrite(forward_right,LOW);
   digitalWrite(back_left,HIGH);
   digitalWrite(forward_left,LOW);
 }
